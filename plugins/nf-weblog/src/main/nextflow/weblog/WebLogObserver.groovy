@@ -90,11 +90,12 @@ class WebLogObserver implements TraceObserver {
      * @param url
      * @param basicToken
      */
-    WebLogObserver(String url, String basicToken) {
+    WebLogObserver(String url, String basicToken,Session s) {
         this.endpoint = checkUrl(url)
         this.basicToken = checkBasicToken(basicToken)
         this.webLogAgent = new Agent<>(this)
         this.generator = createJsonGeneratorForPayloads()
+        this.session = s 
     }
 
     /**
@@ -218,7 +219,11 @@ class WebLogObserver implements TraceObserver {
         message.runId = runId
         message.event = event
         message.utcTime = time
-
+        message.xxx="abc"
+        if (this.session != null) {
+            
+            message.errorMessage = this.session.getWorkflowMetadata().getErrorMessage()
+        }
         if (payload instanceof TraceRecord)
             message.trace = payload.getStore()
         else if (payload instanceof FlowPayload)
