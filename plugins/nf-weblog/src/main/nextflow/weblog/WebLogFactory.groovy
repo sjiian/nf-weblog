@@ -21,7 +21,7 @@ class WebLogFactory implements TraceObserverFactory {
         def result = new ArrayList()
         if ( isEnabled ) {
             if ( !url ) url = WebLogObserver.DEF_URL
-            def observer = new WebLogObserver(url, basicToken)
+            def observer = new WebLogObserver(url, basicToken,session)
             result << observer
         }
         return result
